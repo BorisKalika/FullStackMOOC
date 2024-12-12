@@ -7,19 +7,23 @@ const Header = (title) => {
       )
 }
 
-const Content = (description) => {
-  console.log(description)
+const Part = ({part, exercises}) => {
+  console.log(part, exercises)
+  return(
+    <div>
+      <p>
+        {part} {exercises}
+      </p>
+    </div>
+  )
+}
+
+const Content = ({part1, exercises1, part2, exercises2, part3, exercises3}) => {
     return(
       <div>
-        <p>
-          Part 1: {description.part1} has {description.exercises1} exercises
-        </p>
-        <p>
-          Part 2: {description.part2} has {description.exercises2} exercises
-        </p>
-        <p>
-          Part 3: {description.part3} has {description.exercises3} exercises
-        </p>
+       <Part part={part1} exercises={exercises1}/>
+       <Part part={part2} exercises={exercises2}/>
+       <Part part={part3} exercises={exercises3}/>
       </div>
     )
 }
