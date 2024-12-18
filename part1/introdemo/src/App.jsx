@@ -1,41 +1,42 @@
-const Hello = (props) => {
-
-  console.log(props)
-  return (
-    <div>
-      <p>
-
-        Hello {props.name}, you are {props.age} years old. I like {props.hobby}.
-      </p>
-    </div>
-  )
-}
-
-const Footer = () => {
-
-  return(
-    <div>
-      <p>Mawewe I luvs you </p>
-    </div>
-  )
-}
+import { useState } from 'react'
 
 const App = () => {
 
-  const name = 'Peter'
-  const age = 10
-  const hobby = 'sports'
+  const Display = ({ counter }) => <div>{counter}</div>
+
+  const Button = ({onHulkSmash, name}) => <button onClick={onHulkSmash}> {name} </button>
+
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseByOne = () =>{ 
+    setCounter(counter + 1)
+    console.log('increased! Value before:', counter)
+  }
+
+  const decreaseByOne = () => {
+    setCounter(counter - 1)
+    console.log('decreased! Value before:', counter)
+  }
+
+  const setToZero = () => {
+    setCounter(0)
+    console.log('resetted! Value before:', counter)
+  }
+
+  const randomNum = () => {
+    setCounter(Math.random())
+    console.log('RNG HUZAHAHHH! Value before:', counter)
+  }
 
   return (
     <div>
-      <h1>Greetings</h1>
-
-      <Hello name='Maya' age={26 + 10} hobby={'tennis'}/>
-      <Hello name={name} age={age} hobby={hobby}/>
-      <Footer />
+      <Display counter={counter} />
+      <Button onHulkSmash={increaseByOne} name='plus' />
+      <Button onHulkSmash={decreaseByOne} name='minus' />
+      <Button onHulkSmash={setToZero} name='zero' />
+      <Button onHulkSmash={randomNum} name='random' />
     </div>
   )
 }
-
 
 export default App
