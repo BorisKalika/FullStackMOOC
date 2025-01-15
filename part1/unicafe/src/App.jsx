@@ -31,6 +31,7 @@ return(
   <button onClick={onHulkSmash}> {name}</button>
 )
 }
+
 const App = () => {
   // save clicks of each button to its own state
 
