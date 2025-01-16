@@ -27,8 +27,11 @@ const App = () => {
   const getRandomNum = Math.floor(Math.random() * anecdotes.length)
 
   const flipPage = () =>{
+
     const getRandomNum = Math.floor(Math.random() * anecdotes.length)
+
     setSelected(getRandomNum)
+    
     console.log('changed paged! Previous page: ', getRandomNum)
   }
   
