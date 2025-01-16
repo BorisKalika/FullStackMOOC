@@ -60,7 +60,7 @@ const App = () => {
 
     setVoteArray(newVoteArray) //update array with copy array
 
-    countPage()
+    flipPage()
   }
  
   return (
