@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+//Statistics main component
 const Statistics = ({good, neutral, bad, total, average, pospercentage}) => { 
   return(
     <div>
@@ -13,6 +14,8 @@ const Statistics = ({good, neutral, bad, total, average, pospercentage}) => {
   )
 }
 
+//Display statistics
+//If value name is positive then display it with a %
 const StatisticLine = ({name, value}) => {
   return (
     <table style={{ width: "300px", tableLayout:'fixed'}}>
@@ -55,8 +58,13 @@ const App = () => {
   }
   
   const total = good + neutral + bad
+
+  //do not compute if total is 0, just return 0
+  //fixed value for after decimal point
   const pospercentage = total === 0 ? 0 : ((good/total) * 100).toFixed(10)
   const score = good - bad
+  //do not compute if total is 0, just return 0
+  //fixed value for after decimal point
   const average = total === 0 ? 0 : (score/total).toFixed(10)
 
 
