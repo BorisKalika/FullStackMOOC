@@ -7,6 +7,23 @@ const Button =({onHulkSmash, name}) =>{
   )
   }
 
+const Leaderboard = ({votearray, anecdotes}) => {
+  
+  //returns highest number in the votearray (quote with most votes)
+  const highestVotedQuote = Math.max(...votearray)
+  //returns the index of the highest number
+  const indexTopQuote = votearray.indexOf(highestVotedQuote)
+  //returns the quote in question
+  const topQuote = anecdotes[indexTopQuote]
+
+  return(
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{topQuote}</p>
+      <p>has {highestVotedQuote} votes</p>
+    </div>
+  )
+}
 
 const App = () => {
 
@@ -31,7 +48,7 @@ const App = () => {
     const getRandomNum = Math.floor(Math.random() * anecdotes.length)
 
     setSelected(getRandomNum)
-    
+
     console.log('changed paged! Previous page: ', getRandomNum)
   }
   
@@ -48,10 +65,12 @@ const App = () => {
  
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>Has {votearray[selected]} votes</p>
       <Button onHulkSmash={votes} name='vote' />
       <Button onHulkSmash={flipPage} name='next anecdote' />
+      <Leaderboard votearray={votearray} anecdotes={anecdotes} />
     </div>
   )
 }
