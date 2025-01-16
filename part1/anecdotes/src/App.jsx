@@ -7,7 +7,9 @@ const Button =({onHulkSmash, name}) =>{
   )
   }
 
+
 const App = () => {
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -19,21 +21,34 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-
   const [selected, setSelected] = useState(0)
+  const [votearray, setVoteArray] = useState([0, 0, 0, 0, 0, 0, 0, 0]) //fill array with zeroes
 
   const getRandomNum = Math.floor(Math.random() * anecdotes.length)
 
-  const countPage = () =>{
+  const flipPage = () =>{
     const getRandomNum = Math.floor(Math.random() * anecdotes.length)
     setSelected(getRandomNum)
     console.log('changed paged! Previous page: ', getRandomNum)
   }
+  
+  const votes = () => {
+    
+    const newVoteArray = [...votearray] //make copy
 
+    newVoteArray[selected] +=1 //update curr quote
+
+    setVoteArray(newVoteArray) //update array with copy array
+
+    countPage()
+  }
+ 
   return (
     <div>
       <p>{anecdotes[selected]}</p>
-      <Button onHulkSmash={countPage} name='next anecdote' />
+      <p>Has {votearray[selected]} votes</p>
+      <Button onHulkSmash={votes} name='vote' />
+      <Button onHulkSmash={flipPage} name='next anecdote' />
     </div>
   )
 }
