@@ -21,6 +21,17 @@ const App = () => {
   }, [])
   console.log('render', persons.length, 'notes')
 
+  const removePerson = (person) => {
+    const confirm = window.confirm(`Delete ${person.name}?`)
+    if (!confirm) {
+      return
+    }
+    coms
+      .remove(person.id)
+      .then(() => {
+        setPersons(persons.filter(p => p.id !== person.id))
+      })
+  } 
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -75,7 +86,7 @@ const App = () => {
       <h2>Add a new entry</h2>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handlePersonChange={handlePersonChange} handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Person persons={persons} showPerson={showPerson} />
+      <Person persons={persons} showPerson={showPerson} removePerson={removePerson} />
     </div>
   )
 }
