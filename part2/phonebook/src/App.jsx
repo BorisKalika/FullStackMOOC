@@ -43,22 +43,44 @@ const App = () => {
 
     const personExists = persons.find(person => person.name === newName)
     
-    if (personExists === undefined){
-      coms
-        .create(personObject)
-        .then((newPerson) => {
-          setPersons(persons.concat(newPerson))
-        })
-      /*setPersons(persons.concat(personObject))*/
-      setNewName('')
-      setNewNumber('')
+  if (personExists) {
+    const changedPerson = {
+      ...personExists,
+      number: newNumber
+    }
+
+    const ok = window.confirm(
+      `${personExists.name} is already added to phonebook, replace the old number with a new one?`
+    )
+
+    if (!ok) {
       return
     }
 
-    alert(`${newName} is already added to phonebook`);
-    //clear input
-    setNewName('')
-    setNewNumber('')
+    coms
+      .update(personExists.id, changedPerson)
+      .then(returnedPerson => {
+        setPersons(
+          persons.map(person =>
+            person.id !== personExists.id ? person : returnedPerson
+          )
+        )
+        //clear input
+        setNewName('')
+        setNewNumber('')
+      })
+
+    return
+  }
+
+    coms
+    .create(personObject)
+    .then(newPerson => {
+      setPersons(persons.concat(newPerson))
+      //clear inputt
+      setNewName('')
+      setNewNumber('')
+    })
   }
 
   const handlePersonChange = (event) => {
