@@ -30,9 +30,12 @@ body {
   min-height: 100vh;
 }
 
-h1 {
+
+.notification {
   font-size: 3.2em;
-  line-height: 1.1;
+  list-style: 1.1;
+  color: green;
+  font-style:italic
 }
 
 button {

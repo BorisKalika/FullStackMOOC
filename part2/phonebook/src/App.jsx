@@ -3,12 +3,14 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Person from './components/Persons'
 import coms from './services/coms'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
+  const [notifcationMessage, setNotifcationMessage] = useState('')
 
   useEffect(() => {
     console.log('effect')
@@ -65,6 +67,10 @@ const App = () => {
             person.id !== personExists.id ? person : returnedPerson
           )
         )
+        setNotificationMessage(`Changed number for ${returnedPerson.name}`)
+        setTimeout(() => {
+          setNotificationMessage('')
+        }, 5000)
         //clear input
         setNewName('')
         setNewNumber('')
@@ -77,6 +83,11 @@ const App = () => {
     .create(personObject)
     .then(newPerson => {
       setPersons(persons.concat(newPerson))
+
+      setNotifcationMessage(`Added ${newPerson.name}`)
+      setTimeout(() => {
+        setNotifcationMessage('')
+      }, 50000)
       //clear inputt
       setNewName('')
       setNewNumber('')
@@ -104,6 +115,7 @@ const App = () => {
       debug: {newNumber}
       debug: {showPerson}
       <h2>Phonebook</h2>
+      <Notification message={notifcationMessage}/>
       <Filter showPerson={showPerson} handleLookUpPerson={handleLookUpPerson} />
       <h2>Add a new entry</h2>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handlePersonChange={handlePersonChange} handleNumberChange={handleNumberChange} />
