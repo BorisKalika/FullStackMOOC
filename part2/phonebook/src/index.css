@@ -30,11 +30,17 @@ body {
   min-height: 100vh;
 }
 
-
-.notification {
+.success{
   font-size: 3.2em;
   list-style: 1.1;
   color: green;
+  font-style:italic
+}
+
+.error{
+  font-size: 3.2em;
+  list-style: 1.1;
+  color: red;
   font-style:italic
 }
 

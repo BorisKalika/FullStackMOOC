@@ -10,7 +10,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [showPerson, setShowPerson] = useState('')
-  const [notifcationMessage, setNotifcationMessage] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState('')
+  const [notificationType, setNotificationType] = useState('')
 
   useEffect(() => {
     console.log('effect')
@@ -32,19 +33,38 @@ const App = () => {
       .remove(person.id)
       .then(() => {
         setPersons(persons.filter(p => p.id !== person.id))
+
+        setNotificationType('success')
+        setNotificationMessage(`Delete ${person.name}`)
+
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        setNotificationType('error')
+        setNotificationMessage(
+          `Information of ${person.name} has already been removed from server`
+        )
+
+        setTimeout(() => {
+          setNotificationMessage(null)
+        }, 5000)
+
+        setPersons(persons.filter(person => person.id !== person.id))
       })
   } 
 
-  const addPerson = (event) => {
-    event.preventDefault()
+const addPerson = (event) => {
+  event.preventDefault()
 
-    const personObject = {
-      name : newName,
-      number : newNumber
-    }
+  const personObject = {
+    name: newName,
+    number: newNumber
+  }
 
-    const personExists = persons.find(person => person.name === newName)
-    
+  const personExists = persons.find(person => person.name === newName)
+
   if (personExists) {
     const changedPerson = {
       ...personExists,
@@ -67,11 +87,14 @@ const App = () => {
             person.id !== personExists.id ? person : returnedPerson
           )
         )
+
+        setNotificationType('success')
         setNotificationMessage(`Changed number for ${returnedPerson.name}`)
+
         setTimeout(() => {
-          setNotificationMessage('')
+          setNotificationMessage(null)
         }, 5000)
-        //clear input
+
         setNewName('')
         setNewNumber('')
       })
@@ -79,20 +102,22 @@ const App = () => {
     return
   }
 
-    coms
+  coms
     .create(personObject)
     .then(newPerson => {
       setPersons(persons.concat(newPerson))
 
-      setNotifcationMessage(`Added ${newPerson.name}`)
+      setNotificationType('success')
+      setNotificationMessage(`Added ${newPerson.name}`)
+
       setTimeout(() => {
-        setNotifcationMessage('')
-      }, 50000)
-      //clear inputt
+        setNotificationMessage(null)
+      }, 5000)
+
       setNewName('')
       setNewNumber('')
     })
-  }
+}
 
   const handlePersonChange = (event) => {
     console.log(event.target.value)
@@ -114,8 +139,10 @@ const App = () => {
       debug: {newName}
       debug: {newNumber}
       debug: {showPerson}
+      debug: {notificationMessage}
+      debug: {notificationType}
       <h2>Phonebook</h2>
-      <Notification message={notifcationMessage}/>
+      <Notification message={notificationMessage} type={notificationType}/>
       <Filter showPerson={showPerson} handleLookUpPerson={handleLookUpPerson} />
       <h2>Add a new entry</h2>
       <PersonForm addPerson={addPerson} newName={newName} newNumber={newNumber} handlePersonChange={handlePersonChange} handleNumberChange={handleNumberChange} />
